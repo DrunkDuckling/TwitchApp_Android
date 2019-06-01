@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.example.twitchapp_android.R;
 import com.example.twitchapp_android.model.Categories;
+import com.example.twitchapp_android.model.Streamers;
 
 import java.util.List;
 
@@ -20,11 +21,11 @@ public class StreamersRecyclerViewAdapter extends RecyclerView.Adapter<Streamers
 
     private Context mContext;
     // TODO RENAME LIST OBJECT TO STREAMERS
-    private List<Categories> mData;
+    private List<Streamers> mData;
     private static final String TAG = "StreamersRecyclerViewAd";
     StreamersRecyclerViewAdapter.onItemClickListener onItemClickListener;
 
-    public StreamersRecyclerViewAdapter(Context mContext, List<Categories> mData) {
+    public StreamersRecyclerViewAdapter(Context mContext, List<Streamers> mData) {
         this.mContext = mContext;
         this.mData = mData;
     }
@@ -49,7 +50,7 @@ public class StreamersRecyclerViewAdapter extends RecyclerView.Adapter<Streamers
 
     }
 
-    public StreamersRecyclerViewAdapter(Context mContext, List<Categories> mData, onItemClickListener onItemClickListener) {
+    public StreamersRecyclerViewAdapter(Context mContext, List<Streamers> mData, onItemClickListener onItemClickListener) {
         this.mContext = mContext;
         this.mData = mData;
         this.onItemClickListener = onItemClickListener;
@@ -65,7 +66,7 @@ public class StreamersRecyclerViewAdapter extends RecyclerView.Adapter<Streamers
 
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, int i) {
-        final Categories cat = mData.get(i);
+        final Streamers cat = mData.get(i);
         viewHolder.mTextView.setText(mData.get(i).getTitle());
         // TODO FIX ME FUCKERS
         viewHolder.mImageView.setImageDrawable(mData.get(i).getThumbnail());

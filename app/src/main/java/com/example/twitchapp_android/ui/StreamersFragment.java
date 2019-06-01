@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import com.example.twitchapp_android.R;
 import com.example.twitchapp_android.adapter.StreamersRecyclerViewAdapter;
 import com.example.twitchapp_android.model.Categories;
+import com.example.twitchapp_android.model.Streamers;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +28,10 @@ import java.util.List;
 public class StreamersFragment extends Fragment {
 
 
+    private static final String TAG = "StreamersFragment";
+    public static final String CATALOG_ID = "cat_id";
     private OnFragmentInteractionListener mListener;
+    private String catID;
 
     public StreamersFragment() {
         // Required empty public constructor
@@ -40,9 +44,10 @@ public class StreamersFragment extends Fragment {
      * @return A new instance of fragment StreamersFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static StreamersFragment newInstance() {
+    public static StreamersFragment newInstance(String ID) {
         StreamersFragment fragment = new StreamersFragment();
         Bundle args = new Bundle();
+        args.putString(CATALOG_ID, ID);
         fragment.setArguments(args);
         return fragment;
     }
@@ -50,7 +55,8 @@ public class StreamersFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        catID = getArguments().getString(CATALOG_ID, "");
+        System.out.println(TAG + catID +" Stream ID");
     }
 
     @Override
@@ -58,16 +64,11 @@ public class StreamersFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_category, container, false);
 
-        List<Categories> categoriesList;
-        categoriesList = new ArrayList<>();
-        /*categoriesList.add(new Categories("FFUFUFUFUFUUUF Clover", "Adventure/Fantasy", "Anime description", R.drawable.blackclover));
-        categoriesList.add(new Categories("Boruto", "Adventure/Fantasy/Ninja", "Anime description", R.drawable.boruto));
-        categoriesList.add(new Categories("Dragon Ball Super", "Adventure/Fantasy/Fighting", "Anime description", R.drawable.dragonball));
-        categoriesList.add(new Categories("Fairy Tail", "Adventure/Fantasy/Super Power/Magic", "Anime description", R.drawable.fairy_tail));
-        categoriesList.add(new Categories("One Piece", "Adventure/Fantasy/Pirates/Super power", "Anime description", R.drawable.one_piece));
-*/
+        List<Streamers> streamersList;
+        streamersList = new ArrayList<>();
+
         RecyclerView myRv = view.findViewById(R.id.rcView_id);
-        StreamersRecyclerViewAdapter mAdapter = new StreamersRecyclerViewAdapter(this.getActivity(), categoriesList);
+        StreamersRecyclerViewAdapter mAdapter = new StreamersRecyclerViewAdapter(this.getActivity(), streamersList);
         myRv.setLayoutManager(new GridLayoutManager(this.getActivity(), 3));
         myRv.setAdapter(mAdapter);
 

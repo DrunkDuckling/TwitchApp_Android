@@ -115,19 +115,7 @@ public class CategoryFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_category, container, false);
 
-        //categoriesList.add(new Categories("Black Clover", "Adventure/Fantasy", "Anime description", R.drawable.blackclover));
-        //categoriesList.add(new Categories("Boruto", "Adventure/Fantasy/Ninja", "Anime description", R.drawable.boruto));
-        //categoriesList.add(new Categories("Dragon Ball Super", "Adventure/Fantasy/Fighting", "Anime description", R.drawable.dragonball));
-        //categoriesList.add(new Categories("Fairy Tail", "Adventure/Fantasy/Super Power/Magic", "Anime description", R.drawable.fairy_tail));
-        //categoriesList.add(new Categories("One Piece", "Adventure/Fantasy/Pirates/Super power", "Anime description", R.drawable.one_piece));
-        //categoriesList.add(new Categories("Black Clover", "Adventure/Fantasy", "Anime description", R.drawable.blackclover));
-        //categoriesList.add(new Categories("Boruto", "Adventure/Fantasy/Ninja", "Anime description", R.drawable.boruto));
-        //categoriesList.add(new Categories("Dragon Ball Super", "Adventure/Fantasy/Fighting", "Anime description", R.drawable.dragonball));
-        //categoriesList.add(new Categories("Fairy Tail", "Adventure/Fantasy/Super Power/Magic", "Anime description", R.drawable.fairy_tail));
-        //categoriesList.add(new Categories("One Piece", "Adventure/Fantasy/Pirates/Super power", "Anime description", R.drawable.one_piece));
-
         requestWithSomeHttpHeaders();
-
 
         cats = new ArrayList<>();
 
@@ -139,7 +127,7 @@ public class CategoryFragment extends Fragment {
         mAdapter.setOnItemClickListener(new RecyclerViewAdapter.onItemClickListener() {
             @Override
             public void onClick(Categories cat) {
-                StreamersFragment SF = StreamersFragment.newInstance();
+                StreamersFragment SF = StreamersFragment.newInstance(cat.getCategory());
                 getActivity().getSupportFragmentManager().beginTransaction()
                         .replace(R.id.fragment_container, SF, "CategoryFragment")
                         .addToBackStack(null)
