@@ -41,7 +41,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public void onBindViewHolder(MyViewHolder myViewHolder, int position) {
 
         myViewHolder.tv_anime_title.setText(mData.get(position).getTitle());
-        myViewHolder.img_anime_thumbnail.setImageResource(mData.get(position).getThumbnail());
+        myViewHolder.img_anime_thumbnail.setImageResource(R.drawable.dragonball);
 
 
     }

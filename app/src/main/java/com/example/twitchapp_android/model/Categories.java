@@ -2,13 +2,12 @@ package com.example.twitchapp_android.model;
 
 public class Categories {
 
-    private String Title, Category, Description;
-    private int Thumbnail;
+    private String Title, Category, Description, Thumbnail;
 
     public Categories() {
     }
 
-    public Categories(String title, String category, String description, int thumbnail) {
+    public Categories(String title, String category, String description, String thumbnail) {
         Title = title;
         Category = category;
         Description = description;
@@ -39,11 +38,11 @@ public class Categories {
         Description = description;
     }
 
-    public int getThumbnail() {
+    public String getThumbnail() {
         return Thumbnail;
     }
 
-    public void setThumbnail(int thumbnail) {
+    public void setThumbnail(String thumbnail) {
         Thumbnail = thumbnail;
     }
 }
