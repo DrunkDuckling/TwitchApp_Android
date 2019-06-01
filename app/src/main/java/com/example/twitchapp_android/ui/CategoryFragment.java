@@ -6,20 +6,29 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.twitchapp_android.R;
 import com.example.twitchapp_android.adapter.RecyclerViewAdapter;
 import com.example.twitchapp_android.model.Categories;
+import com.example.twitchapp_android.model.StreamAPISetting;
+import com.example.twitchapp_android.utilities.MySingleton;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -34,6 +43,7 @@ public class CategoryFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private static final String TAG = CategoryFragment.class.getName();
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -62,7 +72,37 @@ public class CategoryFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWithSomeHttpHeaders();
+    }
 
+    public void requestWithSomeHttpHeaders() {
+        //Retrieving the request URL from SETTINGS.
+        String url = StreamAPISetting.getRequestTopGames();
+
+        //Initiates response listener from Volley library
+        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                Log.d(TAG, response.toString());
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        })
+        {
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("Client-ID", StreamAPISetting.getClientId());
+                params.put("Accept", StreamAPISetting.getHeaderAccept());
+                return params;
+            }
+        };
+        //Adds the request to the Queue
+        MySingleton.getInstance(this.getActivity()).addToRequestQueue(jsonObjReq);
     }
 
     @Override

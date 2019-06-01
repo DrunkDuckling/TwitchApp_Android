@@ -1,3 +1,9 @@
+package com.example.twitchapp_android.utilities;
+
+import android.graphics.drawable.Drawable;
+import java.io.InputStream;
+import java.net.URL;
+
 public class ImageLoader{
 
     public static Drawable LoadImageFromWebOperations(String url) {

@@ -1,4 +1,4 @@
-package com.example.twitchapp_android.ui;
+package com.example.twitchapp_android.utilities;
 
 import android.content.Context;
 import android.graphics.Bitmap;
