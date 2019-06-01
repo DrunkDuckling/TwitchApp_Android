@@ -60,12 +60,12 @@ public class StreamersFragment extends Fragment {
 
         List<Categories> categoriesList;
         categoriesList = new ArrayList<>();
-        categoriesList.add(new Categories("FFUFUFUFUFUUUF Clover", "Adventure/Fantasy", "Anime description", R.drawable.blackclover));
+        /*categoriesList.add(new Categories("FFUFUFUFUFUUUF Clover", "Adventure/Fantasy", "Anime description", R.drawable.blackclover));
         categoriesList.add(new Categories("Boruto", "Adventure/Fantasy/Ninja", "Anime description", R.drawable.boruto));
         categoriesList.add(new Categories("Dragon Ball Super", "Adventure/Fantasy/Fighting", "Anime description", R.drawable.dragonball));
         categoriesList.add(new Categories("Fairy Tail", "Adventure/Fantasy/Super Power/Magic", "Anime description", R.drawable.fairy_tail));
         categoriesList.add(new Categories("One Piece", "Adventure/Fantasy/Pirates/Super power", "Anime description", R.drawable.one_piece));
-
+*/
         RecyclerView myRv = view.findViewById(R.id.rcView_id);
         StreamersRecyclerViewAdapter mAdapter = new StreamersRecyclerViewAdapter(this.getActivity(), categoriesList);
         myRv.setLayoutManager(new GridLayoutManager(this.getActivity(), 3));

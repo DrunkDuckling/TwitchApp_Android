@@ -62,15 +62,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         return new MyViewHolder(view);
     }
 
-
-
-
     @Override
     public void onBindViewHolder(MyViewHolder myViewHolder, int position) {
 
         final Categories cat = mData.get(position);
         myViewHolder.mTextView.setText(mData.get(position).getTitle());
-        myViewHolder.mImageView.setImageResource(mData.get(position).getThumbnail());
+        myViewHolder.mImageView.setImageResource(R.drawable.dragonball);
 
         myViewHolder.mImageView.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -12,12 +12,24 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.twitchapp_android.R;
 import com.example.twitchapp_android.adapter.RecyclerViewAdapter;
 import com.example.twitchapp_android.model.Categories;
+import com.example.twitchapp_android.model.StreamAPISetting;
+import com.example.twitchapp_android.utilities.MySingleton;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -57,6 +69,37 @@ public class CategoryFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWithSomeHttpHeaders();
+    }
+
+    public void requestWithSomeHttpHeaders() {
+        //Retrieving the request URL from SETTINGS.
+        String url = StreamAPISetting.getRequestTopGames();
+
+        //Initiates response listener from Volley library
+        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                Log.d(TAG, response.toString());
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        })
+        {
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("Client-ID", StreamAPISetting.getClientId());
+                params.put("Accept", StreamAPISetting.getHeaderAccept());
+                return params;
+            }
+        };
+        //Adds the request to the Queue
+        MySingleton.getInstance(this.getActivity()).addToRequestQueue(jsonObjReq);
     }
 
     @Override
@@ -66,11 +109,17 @@ public class CategoryFragment extends Fragment {
 
         List<Categories> categoriesList;
         categoriesList = new ArrayList<>();
-        categoriesList.add(new Categories("Black Clover", "Adventure/Fantasy", "Anime description", R.drawable.blackclover));
-        categoriesList.add(new Categories("Boruto", "Adventure/Fantasy/Ninja", "Anime description", R.drawable.boruto));
-        categoriesList.add(new Categories("Dragon Ball Super", "Adventure/Fantasy/Fighting", "Anime description", R.drawable.dragonball));
-        categoriesList.add(new Categories("Fairy Tail", "Adventure/Fantasy/Super Power/Magic", "Anime description", R.drawable.fairy_tail));
-        categoriesList.add(new Categories("One Piece", "Adventure/Fantasy/Pirates/Super power", "Anime description", R.drawable.one_piece));
+        //categoriesList.add(new Categories("Black Clover", "Adventure/Fantasy", "Anime description", R.drawable.blackclover));
+        //categoriesList.add(new Categories("Boruto", "Adventure/Fantasy/Ninja", "Anime description", R.drawable.boruto));
+        //categoriesList.add(new Categories("Dragon Ball Super", "Adventure/Fantasy/Fighting", "Anime description", R.drawable.dragonball));
+        //categoriesList.add(new Categories("Fairy Tail", "Adventure/Fantasy/Super Power/Magic", "Anime description", R.drawable.fairy_tail));
+        //categoriesList.add(new Categories("One Piece", "Adventure/Fantasy/Pirates/Super power", "Anime description", R.drawable.one_piece));
+        //categoriesList.add(new Categories("Black Clover", "Adventure/Fantasy", "Anime description", R.drawable.blackclover));
+        //categoriesList.add(new Categories("Boruto", "Adventure/Fantasy/Ninja", "Anime description", R.drawable.boruto));
+        //categoriesList.add(new Categories("Dragon Ball Super", "Adventure/Fantasy/Fighting", "Anime description", R.drawable.dragonball));
+        //categoriesList.add(new Categories("Fairy Tail", "Adventure/Fantasy/Super Power/Magic", "Anime description", R.drawable.fairy_tail));
+        //categoriesList.add(new Categories("One Piece", "Adventure/Fantasy/Pirates/Super power", "Anime description", R.drawable.one_piece));
+
 
         RecyclerView myRv = view.findViewById(R.id.rcView_id);
         RecyclerViewAdapter mAdapter = new RecyclerViewAdapter(this.getActivity(), categoriesList);
