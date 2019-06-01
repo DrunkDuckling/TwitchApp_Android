@@ -127,7 +127,7 @@ public class CategoryFragment extends Fragment {
         mAdapter.setOnItemClickListener(new RecyclerViewAdapter.onItemClickListener() {
             @Override
             public void onClick(Categories cat) {
-                StreamersFragment SF = StreamersFragment.newInstance(cat.getCategory());
+                StreamersFragment SF = StreamersFragment.newInstance(cat.getId());
                 getActivity().getSupportFragmentManager().beginTransaction()
                         .replace(R.id.fragment_container, SF, "CategoryFragment")
                         .addToBackStack(null)

@@ -5,17 +5,30 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.twitchapp_android.R;
+import com.example.twitchapp_android.adapter.RecyclerViewAdapter;
 import com.example.twitchapp_android.adapter.StreamersRecyclerViewAdapter;
 import com.example.twitchapp_android.model.Categories;
+import com.example.twitchapp_android.model.StreamAPISetting;
 import com.example.twitchapp_android.model.Streamers;
+import com.example.twitchapp_android.utilities.MySingleton;
+import com.example.twitchapp_android.utilities.Parser;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -32,6 +45,10 @@ public class StreamersFragment extends Fragment {
     public static final String CATALOG_ID = "cat_id";
     private OnFragmentInteractionListener mListener;
     private String catID;
+
+    private List<Streamers> cats;
+
+    private StreamersRecyclerViewAdapter mAdapter;
 
     public StreamersFragment() {
         // Required empty public constructor
@@ -64,17 +81,19 @@ public class StreamersFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_category, container, false);
 
-        List<Streamers> streamersList;
-        streamersList = new ArrayList<>();
+
+        requestWithSomeHttpHeaders();
+
+        cats = new ArrayList<>();
 
         RecyclerView myRv = view.findViewById(R.id.rcView_id);
-        StreamersRecyclerViewAdapter mAdapter = new StreamersRecyclerViewAdapter(this.getActivity(), streamersList);
+        mAdapter = new StreamersRecyclerViewAdapter(this.getActivity(), cats);
         myRv.setLayoutManager(new GridLayoutManager(this.getActivity(), 3));
         myRv.setAdapter(mAdapter);
 
         mAdapter.setOnItemClickListener(new StreamersRecyclerViewAdapter.onItemClickListener() {
             @Override
-            public void onClick(Categories cat) {
+            public void onClick(Streamers cat) {
                 //TODO Create fragment.
             }
         });
@@ -104,6 +123,42 @@ public class StreamersFragment extends Fragment {
         super.onDetach();
         mListener = null;
     }*/
+
+
+    public void requestWithSomeHttpHeaders() {
+        //Retrieving the request URL from SETTINGS.
+        String url = StreamAPISetting.REQUEST_STREAMS + catID;
+
+        //Initiates response listener from Volley library
+        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                for (Streamers c: Parser.parseStreamers(response)) {
+                    cats.add(c);
+                }
+                System.out.println(cats.get(4).getUser_name());
+                mAdapter.notifyDataSetChanged();
+                Log.d(TAG, response.toString());
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d(TAG, "onErrorResponse: ERROR: " + error);
+            }
+        })
+        {
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("Client-ID", StreamAPISetting.getClientId());
+                params.put("Accept", StreamAPISetting.getHeaderAccept());
+                return params;
+            }
+        };
+        //Adds the request to the Queue
+        MySingleton.getInstance(this.getActivity()).addToRequestQueue(jsonObjReq);
+    }
+
 
     /**
      * This interface must be implemented by activities that contain this

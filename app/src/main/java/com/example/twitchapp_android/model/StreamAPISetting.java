@@ -7,6 +7,7 @@ public class StreamAPISetting {
     public static final String HEADER_ACCEPT = "application/vnd.twitchtv.v5+json";
 
     public static final String REQUEST_TOP_GAMES = "https://api.twitch.tv/helix/games/top";
+    public static final String REQUEST_STREAMS = "https://api.twitch.tv/helix/streams?game_id=";
 
     public static String getRequestTopStreams() {
         return REQUEST_TOP_STREAMS;

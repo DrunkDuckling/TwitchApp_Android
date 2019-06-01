@@ -35,7 +35,7 @@ public class StreamersRecyclerViewAdapter extends RecyclerView.Adapter<Streamers
     }
 
     public interface onItemClickListener {
-        void onClick(Categories cat);//pass your object types.
+        void onClick(Streamers cat);//pass your object types.
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -67,7 +67,7 @@ public class StreamersRecyclerViewAdapter extends RecyclerView.Adapter<Streamers
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, int i) {
         final Streamers cat = mData.get(i);
-        viewHolder.mTextView.setText(mData.get(i).getTitle());
+        viewHolder.mTextView.setText(mData.get(i).getUser_name());
         // TODO FIX ME FUCKERS
         viewHolder.mImageView.setImageDrawable(mData.get(i).getThumbnail());
         viewHolder.mImageView.setOnClickListener(new View.OnClickListener() {
