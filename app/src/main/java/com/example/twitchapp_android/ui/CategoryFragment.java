@@ -134,28 +134,6 @@ public class CategoryFragment extends Fragment {
         return view;
     }
 
-    public void fillView(JSONObject res, LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
-        View view = inflater.inflate(R.layout.fragment_category, container, false);
-
-
-        List<Categories> categoriesList;
-        categoriesList = new ArrayList<>();
-        try {
-            JSONArray objects = res.getJSONArray("data");
-            for(int i = 0; i<objects.length(); i++){
-                JSONObject o = objects.getJSONObject(i);
-                System.out.println(o.getString("name"));
-                categoriesList.add(new Categories(o.getString("name"), o.getString("id"), "", o.getString("box_art_url")));
-            }
-        } catch(JSONException e){
-            System.out.println(e.toString());
-        }
-        RecyclerView myRv = view.findViewById(R.id.rcView_id);
-        RecyclerViewAdapter mAdapter = new RecyclerViewAdapter(this.getActivity(), categoriesList);
-        myRv.setLayoutManager(new GridLayoutManager(this.getActivity(), 3));
-        myRv.setAdapter(mAdapter);
-    }
-
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
