@@ -1,14 +1,14 @@
-package com.example.twitchapp_android;
+package com.example.twitchapp_android.model;
 
-public class Anime {
+public class Categories {
 
     private String Title, Category, Description;
     private int Thumbnail;
 
-    public Anime() {
+    public Categories() {
     }
 
-    public Anime(String title, String category, String description, int thumbnail) {
+    public Categories(String title, String category, String description, int thumbnail) {
         Title = title;
         Category = category;
         Description = description;

@@ -1,4 +1,4 @@
-package com.example.twitchapp_android;
+package com.example.twitchapp_android.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -8,7 +8,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
+import com.example.twitchapp_android.R;
+import com.example.twitchapp_android.model.Categories;
 
 import java.util.List;
 
@@ -16,10 +17,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
 
     private Context mContext;
-    private List<Anime> mData;
+    private List<Categories> mData;
 
 
-    public RecyclerViewAdapter(Context mContext, List<Anime> mData) {
+    public RecyclerViewAdapter(Context mContext, List<Categories> mData) {
         this.mContext = mContext;
         this.mData = mData;
     }
@@ -58,8 +59,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         public MyViewHolder(View itemView){
             super(itemView);
 
-            tv_anime_title = (TextView) itemView.findViewById(R.id.anime_title_id);
-            img_anime_thumbnail = (ImageView) itemView.findViewById(R.id.anime_img_id);
+            tv_anime_title = itemView.findViewById(R.id.anime_title_id);
+            img_anime_thumbnail = itemView.findViewById(R.id.anime_img_id);
 
 
         }
