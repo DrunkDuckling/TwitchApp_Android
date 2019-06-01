@@ -29,11 +29,13 @@ public class Parser {
             for(int i = 0; i<objects.length(); i++){
                 JSONObject o = objects.getJSONObject(i);
                 System.out.println(o.getString("name"));
+                String url = o.getString("box_art_url")
+                        .replace("{height}", "200")
+                        .replace("{width}", "150");
+                System.out.println(url);
                 categoriesList.add(new Categories(o.getString("name"),
                         o.getString("id"), "",
-                        ImageLoader.LoadImageFromWebOperations(o.getString("box_art_url")
-                                .replace("{height}", "200")
-                                .replace("{width}", "150"))));
+                        ImageLoader.LoadImageFromWebOperations(url)));
             }
         } catch(JSONException e){
             System.out.println(e.toString());

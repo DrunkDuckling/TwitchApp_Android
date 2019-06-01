@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -44,7 +45,9 @@ public class CategoryFragment extends Fragment {
 
     private static final String TAG = "CategoryFragment";
 
-    private JSONObject jo;
+    private List<Categories> cats;
+
+    private RecyclerViewAdapter mAdapter;
 
     private OnFragmentInteractionListener mListener;
 
@@ -81,11 +84,13 @@ public class CategoryFragment extends Fragment {
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                jo = response;
-
+                for (Categories c: Parser.parseCategories(response)) {
+                    cats.add(c);
+                }
+                System.out.println(cats.get(4).getCategory());
+                mAdapter.notifyDataSetChanged();
                 Log.d(TAG, response.toString());
-
-            }
+                }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
@@ -110,8 +115,6 @@ public class CategoryFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_category, container, false);
 
-        List<Categories> categoriesList;
-        categoriesList = new ArrayList<>();
         //categoriesList.add(new Categories("Black Clover", "Adventure/Fantasy", "Anime description", R.drawable.blackclover));
         //categoriesList.add(new Categories("Boruto", "Adventure/Fantasy/Ninja", "Anime description", R.drawable.boruto));
         //categoriesList.add(new Categories("Dragon Ball Super", "Adventure/Fantasy/Fighting", "Anime description", R.drawable.dragonball));
@@ -126,14 +129,10 @@ public class CategoryFragment extends Fragment {
         requestWithSomeHttpHeaders();
 
 
-        if(jo != null) {
-            categoriesList = Parser.parseCategories(jo);
-        } else{
-            Log.d(TAG, "jo was null");
-        }
+        cats = new ArrayList<>();
 
         RecyclerView myRv = view.findViewById(R.id.rcView_id);
-        RecyclerViewAdapter mAdapter = new RecyclerViewAdapter(this.getActivity(), categoriesList);
+        mAdapter = new RecyclerViewAdapter(this.getActivity(), cats);
         myRv.setLayoutManager(new GridLayoutManager(this.getActivity(), 3));
         myRv.setAdapter(mAdapter);
 
