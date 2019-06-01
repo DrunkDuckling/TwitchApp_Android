@@ -1,13 +1,16 @@
 package com.example.twitchapp_android.model;
 
+import android.graphics.drawable.Drawable;
+
 public class Categories {
 
-    private String Title, Category, Description, Thumbnail;
+    private String Title, Category, Description;
+    Drawable Thumbnail;
 
     public Categories() {
     }
 
-    public Categories(String title, String category, String description, String thumbnail) {
+    public Categories(String title, String category, String description, Drawable thumbnail) {
         Title = title;
         Category = category;
         Description = description;
@@ -38,11 +41,11 @@ public class Categories {
         Description = description;
     }
 
-    public String getThumbnail() {
+    public Drawable getThumbnail() {
         return Thumbnail;
     }
 
-    public void setThumbnail(String thumbnail) {
+    public void setThumbnail(Drawable thumbnail) {
         Thumbnail = thumbnail;
     }
 }

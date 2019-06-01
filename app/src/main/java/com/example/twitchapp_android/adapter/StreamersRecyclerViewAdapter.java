@@ -68,7 +68,7 @@ public class StreamersRecyclerViewAdapter extends RecyclerView.Adapter<Streamers
         final Categories cat = mData.get(i);
         viewHolder.mTextView.setText(mData.get(i).getTitle());
         // TODO FIX ME FUCKERS
-        viewHolder.mImageView.setImageResource(R.drawable.blackclover);
+        viewHolder.mImageView.setImageDrawable(mData.get(i).getThumbnail());
         viewHolder.mImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

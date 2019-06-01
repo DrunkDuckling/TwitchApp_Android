@@ -67,7 +67,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         final Categories cat = mData.get(position);
         myViewHolder.mTextView.setText(mData.get(position).getTitle());
-        myViewHolder.mImageView.setImageResource(R.drawable.dragonball);
+        myViewHolder.mImageView.setImageDrawable(mData.get(position).getThumbnail());
 
         myViewHolder.mImageView.setOnClickListener(new View.OnClickListener() {
             @Override

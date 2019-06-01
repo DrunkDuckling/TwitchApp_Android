@@ -21,6 +21,7 @@ import com.example.twitchapp_android.adapter.RecyclerViewAdapter;
 import com.example.twitchapp_android.model.Categories;
 import com.example.twitchapp_android.model.StreamAPISetting;
 import com.example.twitchapp_android.utilities.MySingleton;
+import com.example.twitchapp_android.utilities.Parser;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -43,6 +44,7 @@ public class CategoryFragment extends Fragment {
 
     private static final String TAG = "CategoryFragment";
 
+    private JSONObject jo;
 
     private OnFragmentInteractionListener mListener;
 
@@ -69,7 +71,6 @@ public class CategoryFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWithSomeHttpHeaders();
     }
 
     public void requestWithSomeHttpHeaders() {
@@ -80,6 +81,8 @@ public class CategoryFragment extends Fragment {
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
+                jo = response;
+
                 Log.d(TAG, response.toString());
 
             }
@@ -120,6 +123,14 @@ public class CategoryFragment extends Fragment {
         //categoriesList.add(new Categories("Fairy Tail", "Adventure/Fantasy/Super Power/Magic", "Anime description", R.drawable.fairy_tail));
         //categoriesList.add(new Categories("One Piece", "Adventure/Fantasy/Pirates/Super power", "Anime description", R.drawable.one_piece));
 
+        requestWithSomeHttpHeaders();
+
+
+        if(jo != null) {
+            categoriesList = Parser.parseCategories(jo);
+        } else{
+            Log.d(TAG, "jo was null");
+        }
 
         RecyclerView myRv = view.findViewById(R.id.rcView_id);
         RecyclerViewAdapter mAdapter = new RecyclerViewAdapter(this.getActivity(), categoriesList);
