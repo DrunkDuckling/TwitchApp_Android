@@ -14,6 +14,10 @@ import com.example.twitchapp_android.R;
 import com.example.twitchapp_android.adapter.RecyclerViewAdapter;
 import com.example.twitchapp_android.model.Categories;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -70,16 +74,16 @@ public class CategoryFragment extends Fragment {
         List<Categories> categoriesList;
 
         categoriesList = new ArrayList<>();
-        categoriesList.add(new Categories("Black Clover", "Adventure/Fantasy", "Anime description", R.drawable.blackclover));
-        categoriesList.add(new Categories("Boruto", "Adventure/Fantasy/Ninja", "Anime description", R.drawable.boruto));
-        categoriesList.add(new Categories("Dragon Ball Super", "Adventure/Fantasy/Fighting", "Anime description", R.drawable.dragonball));
-        categoriesList.add(new Categories("Fairy Tail", "Adventure/Fantasy/Super Power/Magic", "Anime description", R.drawable.fairy_tail));
-        categoriesList.add(new Categories("One Piece", "Adventure/Fantasy/Pirates/Super power", "Anime description", R.drawable.one_piece));
-        categoriesList.add(new Categories("Black Clover", "Adventure/Fantasy", "Anime description", R.drawable.blackclover));
-        categoriesList.add(new Categories("Boruto", "Adventure/Fantasy/Ninja", "Anime description", R.drawable.boruto));
-        categoriesList.add(new Categories("Dragon Ball Super", "Adventure/Fantasy/Fighting", "Anime description", R.drawable.dragonball));
-        categoriesList.add(new Categories("Fairy Tail", "Adventure/Fantasy/Super Power/Magic", "Anime description", R.drawable.fairy_tail));
-        categoriesList.add(new Categories("One Piece", "Adventure/Fantasy/Pirates/Super power", "Anime description", R.drawable.one_piece));
+        //categoriesList.add(new Categories("Black Clover", "Adventure/Fantasy", "Anime description", R.drawable.blackclover));
+        //categoriesList.add(new Categories("Boruto", "Adventure/Fantasy/Ninja", "Anime description", R.drawable.boruto));
+        //categoriesList.add(new Categories("Dragon Ball Super", "Adventure/Fantasy/Fighting", "Anime description", R.drawable.dragonball));
+        //categoriesList.add(new Categories("Fairy Tail", "Adventure/Fantasy/Super Power/Magic", "Anime description", R.drawable.fairy_tail));
+        //categoriesList.add(new Categories("One Piece", "Adventure/Fantasy/Pirates/Super power", "Anime description", R.drawable.one_piece));
+        //categoriesList.add(new Categories("Black Clover", "Adventure/Fantasy", "Anime description", R.drawable.blackclover));
+        //categoriesList.add(new Categories("Boruto", "Adventure/Fantasy/Ninja", "Anime description", R.drawable.boruto));
+        //categoriesList.add(new Categories("Dragon Ball Super", "Adventure/Fantasy/Fighting", "Anime description", R.drawable.dragonball));
+        //categoriesList.add(new Categories("Fairy Tail", "Adventure/Fantasy/Super Power/Magic", "Anime description", R.drawable.fairy_tail));
+        //categoriesList.add(new Categories("One Piece", "Adventure/Fantasy/Pirates/Super power", "Anime description", R.drawable.one_piece));
 
 
         RecyclerView myRv = view.findViewById(R.id.rcView_id);
@@ -88,6 +92,28 @@ public class CategoryFragment extends Fragment {
         myRv.setAdapter(mAdapter);
 
         return view;
+    }
+
+    public void fillView(JSONObject res, LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
+        View view = inflater.inflate(R.layout.fragment_category, container, false);
+
+
+        List<Categories> categoriesList;
+        categoriesList = new ArrayList<>();
+        try {
+            JSONArray objects = res.getJSONArray("data");
+            for(int i = 0; i<objects.length(); i++){
+                JSONObject o = objects.getJSONObject(i);
+                System.out.println(o.getString("name"));
+                categoriesList.add(new Categories(o.getString("name"), o.getString("id"), "", o.getString("box_art_url")));
+            }
+        } catch(JSONException e){
+            System.out.println(e.toString());
+        }
+        RecyclerView myRv = view.findViewById(R.id.rcView_id);
+        RecyclerViewAdapter mAdapter = new RecyclerViewAdapter(this.getActivity(), categoriesList);
+        myRv.setLayoutManager(new GridLayoutManager(this.getActivity(), 3));
+        myRv.setAdapter(mAdapter);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
