@@ -4,16 +4,15 @@ import android.graphics.drawable.Drawable;
 
 public class Categories {
 
-    private String Title, Category, Description;
+    private String Title, Id;
     Drawable Thumbnail;
 
     public Categories() {
     }
 
-    public Categories(String title, String category, String description, Drawable thumbnail) {
+    public Categories(String title, String id, Drawable thumbnail) {
         Title = title;
-        Category = category;
-        Description = description;
+        Id = id;
         Thumbnail = thumbnail;
     }
 
@@ -25,20 +24,12 @@ public class Categories {
         Title = title;
     }
 
-    public String getCategory() {
-        return Category;
+    public String getId() {
+        return Id;
     }
 
-    public void setCategory(String category) {
-        Category = category;
-    }
-
-    public String getDescription() {
-        return Description;
-    }
-
-    public void setDescription(String description) {
-        Description = description;
+    public void setId(String category) {
+        Id = category;
     }
 
     public Drawable getThumbnail() {
