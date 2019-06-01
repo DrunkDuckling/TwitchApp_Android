@@ -16,7 +16,7 @@ public class MainActivity extends AppCompatActivity {
 
         FragmentTransaction mainFt = getSupportFragmentManager().beginTransaction();
         Fragment main = CategoryFragment.newInstance();
-        mainFt.replace(R.id.fragment_container, main);
+        mainFt.replace(R.id.fragment_container, main, "CategoryFrament");
         mainFt.commit();
 
         }

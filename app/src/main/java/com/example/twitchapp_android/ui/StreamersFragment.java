@@ -1,19 +1,16 @@
 package com.example.twitchapp_android.ui;
 
-
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.twitchapp_android.R;
-import com.example.twitchapp_android.adapter.RecyclerViewAdapter;
+import com.example.twitchapp_android.adapter.StreamersRecyclerViewAdapter;
 import com.example.twitchapp_android.model.Categories;
 
 import java.util.ArrayList;
@@ -22,34 +19,30 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link CategoryFragment.OnFragmentInteractionListener} interface
+ * {@link StreamersFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link CategoryFragment#newInstance} factory method to
+ * Use the {@link StreamersFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class CategoryFragment extends Fragment {
-
-    private static final String TAG = "CategoryFragment";
+public class StreamersFragment extends Fragment {
 
 
     private OnFragmentInteractionListener mListener;
 
-    public CategoryFragment() {
+    public StreamersFragment() {
         // Required empty public constructor
     }
 
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
-     * @return A new instance of fragment CategoryFragment.
+     *
+     * @return A new instance of fragment StreamersFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static CategoryFragment newInstance() {
-        CategoryFragment fragment = new CategoryFragment();
+    public static StreamersFragment newInstance() {
+        StreamersFragment fragment = new StreamersFragment();
         Bundle args = new Bundle();
-        /*
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);*/
         fragment.setArguments(args);
         return fragment;
     }
@@ -57,6 +50,7 @@ public class CategoryFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
     }
 
     @Override
@@ -66,28 +60,23 @@ public class CategoryFragment extends Fragment {
 
         List<Categories> categoriesList;
         categoriesList = new ArrayList<>();
-        categoriesList.add(new Categories("Black Clover", "Adventure/Fantasy", "Anime description", R.drawable.blackclover));
+        categoriesList.add(new Categories("FFUFUFUFUFUUUF Clover", "Adventure/Fantasy", "Anime description", R.drawable.blackclover));
         categoriesList.add(new Categories("Boruto", "Adventure/Fantasy/Ninja", "Anime description", R.drawable.boruto));
         categoriesList.add(new Categories("Dragon Ball Super", "Adventure/Fantasy/Fighting", "Anime description", R.drawable.dragonball));
         categoriesList.add(new Categories("Fairy Tail", "Adventure/Fantasy/Super Power/Magic", "Anime description", R.drawable.fairy_tail));
         categoriesList.add(new Categories("One Piece", "Adventure/Fantasy/Pirates/Super power", "Anime description", R.drawable.one_piece));
 
         RecyclerView myRv = view.findViewById(R.id.rcView_id);
-        RecyclerViewAdapter mAdapter = new RecyclerViewAdapter(this.getActivity(), categoriesList);
+        StreamersRecyclerViewAdapter mAdapter = new StreamersRecyclerViewAdapter(this.getActivity(), categoriesList);
         myRv.setLayoutManager(new GridLayoutManager(this.getActivity(), 3));
         myRv.setAdapter(mAdapter);
 
-        mAdapter.setOnItemClickListener(new RecyclerViewAdapter.onItemClickListener() {
+        mAdapter.setOnItemClickListener(new StreamersRecyclerViewAdapter.onItemClickListener() {
             @Override
             public void onClick(Categories cat) {
-                StreamersFragment SF = StreamersFragment.newInstance();
-                getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_container, SF, "CategoryFragment")
-                        .addToBackStack(null)
-                        .commit();
+                //TODO Create fragment.
             }
         });
-
         return view;
     }
 

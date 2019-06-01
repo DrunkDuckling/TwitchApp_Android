@@ -1,31 +1,35 @@
 package com.example.twitchapp_android.adapter;
 
-import android.content.ClipData;
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.twitchapp_android.R;
 import com.example.twitchapp_android.model.Categories;
 
 import java.util.List;
 
-public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder> {
+public class StreamersRecyclerViewAdapter extends RecyclerView.Adapter<StreamersRecyclerViewAdapter.ViewHolder> {
+
+
     private Context mContext;
+    // TODO RENAME LIST OBJECT TO STREAMERS
     private List<Categories> mData;
-    private static final String TAG = "RecyclerViewAdapter";
+    private static final String TAG = "StreamersRecyclerViewAd";
+    StreamersRecyclerViewAdapter.onItemClickListener onItemClickListener;
 
-    onItemClickListener onItemClickListener;
+    public StreamersRecyclerViewAdapter(Context mContext, List<Categories> mData) {
+        this.mContext = mContext;
+        this.mData = mData;
+    }
 
-    public void setOnItemClickListener(RecyclerViewAdapter.onItemClickListener onItemClickListener) {
+    public void setOnItemClickListener(StreamersRecyclerViewAdapter.onItemClickListener onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
     }
 
@@ -33,12 +37,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         void onClick(Categories cat);//pass your object types.
     }
 
-
-    public static class MyViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView mTextView;
         ImageView mImageView;
 
-        public MyViewHolder(View itemView){
+        public ViewHolder(View itemView){
             super(itemView);
             mTextView = itemView.findViewById(R.id.anime_title_id);
             mImageView = itemView.findViewById(R.id.anime_img_id);
@@ -46,39 +49,31 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     }
 
-
-    public RecyclerViewAdapter(Context mContext, List<Categories> mData) {
+    public StreamersRecyclerViewAdapter(Context mContext, List<Categories> mData, onItemClickListener onItemClickListener) {
         this.mContext = mContext;
         this.mData = mData;
+        this.onItemClickListener = onItemClickListener;
     }
-
-
 
     @NonNull
     @Override
-    public MyViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+    public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         LayoutInflater mInflater = LayoutInflater.from(mContext);
         View view = mInflater.inflate(R.layout.cardview_item_anime, viewGroup, false);
-        return new MyViewHolder(view);
+        return new ViewHolder(view);
     }
 
-
-
-
     @Override
-    public void onBindViewHolder(MyViewHolder myViewHolder, int position) {
-
-        final Categories cat = mData.get(position);
-        myViewHolder.mTextView.setText(mData.get(position).getTitle());
-        myViewHolder.mImageView.setImageResource(mData.get(position).getThumbnail());
-
-        myViewHolder.mImageView.setOnClickListener(new View.OnClickListener() {
+    public void onBindViewHolder(ViewHolder viewHolder, int i) {
+        final Categories cat = mData.get(i);
+        viewHolder.mTextView.setText(mData.get(i).getTitle());
+        viewHolder.mImageView.setImageResource(mData.get(i).getThumbnail());
+        viewHolder.mImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onItemClickListener.onClick(cat);
             }
         });
-
 
     }
 
@@ -86,5 +81,4 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public int getItemCount() {
         return mData.size();
     }
-
 }
