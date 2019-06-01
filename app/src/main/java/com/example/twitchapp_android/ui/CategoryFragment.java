@@ -87,7 +87,7 @@ public class CategoryFragment extends Fragment {
                 for (Categories c: Parser.parseCategories(response)) {
                     cats.add(c);
                 }
-                System.out.println(cats.get(4).getCategory());
+                System.out.println(cats.get(4).getId());
                 mAdapter.notifyDataSetChanged();
                 Log.d(TAG, response.toString());
                 }
